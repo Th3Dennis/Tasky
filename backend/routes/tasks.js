@@ -23,5 +23,36 @@ router.post("/", function (req, res) {
     });
 });
 
+/* GET all tasks by user in query*/
+router.get("/", function (req, res) {
+  if (req.query.user) {
+    console.log("in 1");
+    prisma.task
+      .findMany({
+        where: {
+          userEmail: req.query.user,
+        },
+      })
+      .then((tasks) => {
+        res.status(200).json(tasks);
+      })
+      .catch((error) => {
+        //log error
+        console.log(error);
+        res.status(500).json(error);
+      });
+  } else {
+    prisma.task
+      .findMany()
+      .then((tasks) => {
+        res.status(200).json(tasks);
+      })
+      .catch((error) => {
+        //log error
+        console.log(error);
+        res.status(500).json(error);
+      });
+  }
+});
 
 module.exports = router;
