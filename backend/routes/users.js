@@ -16,9 +16,12 @@ router.post('/', function(req, res, next) {
       name: req.body.name,
     }, 
   }).then(user => {
-    res.json(user);
+    res.status(200).json(user);
   }).catch(error => {
-    res.json(error);
+    //log error
+    
+
+    res.status(500).json(error);
   })
 });
 
